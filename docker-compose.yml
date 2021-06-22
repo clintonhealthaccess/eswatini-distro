@@ -23,7 +23,7 @@ services:
     depends_on: [consul]
 
   reference-ui:
-    image: openlmis/reference-ui:${OL_REFERENCE_UI_VERSION}
+    image: kausamusa/eswatini-ui:1.0.0-STAGING
     env_file: settings.env
     depends_on: [consul]
 
