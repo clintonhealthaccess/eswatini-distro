@@ -74,7 +74,8 @@ services:
       JAVA_OPTS: '-server -Xmx512m -Dlogging.config=/config/log/logback.xml'
     volumes:
       - 'service-config:/config'
-    depends_on: [log, db]
+      - 'fulfillment-extensions:/extensions'
+    depends_on: [log, db, fulfillment-extensions]
     command: ["/wait-for-postgres.sh", "/run.sh"]
 
   cce:
@@ -86,6 +87,11 @@ services:
       - 'service-config:/config'
     depends_on: [log, db]
     command: ["/wait-for-postgres.sh", "/run.sh"]
+
+  esw-fulfillment-extensions:
+    image: kausamusa/esw-fulfillment-extensions:1.0.0-SNAPSHOT
+    volumes:
+      - 'fulfillment-extensions:/extensions'
 
   stockmanagement:
     image: openlmis/stockmanagement:${OL_STOCKMANAGEMENT_VERSION}
@@ -118,7 +124,7 @@ services:
       - 'service-config:/config'
     depends_on: [log, db]
     command: ["/wait-for-postgres.sh", "/run.sh"]
-    
+
   diagnostics:
     image: openlmis/diagnostics:${OL_DIAGNOSTICS_VERSION}
     env_file: settings.env
@@ -172,4 +178,6 @@ volumes:
   consul-template-log:
     external: false
   service-config:
+    external: false
+  fulfillment-extensions:
     external: false
