@@ -23,7 +23,7 @@ services:
     depends_on: [consul]
 
   reference-ui:
-    image: kausamusa/eswatini-ui:1.0.0-STAGING
+    image: kausamusa/eswatini-ui:${ESWATINI_UI_VERSION}
     env_file: settings.env
     depends_on: [consul]
 
@@ -41,7 +41,7 @@ services:
     image: openlmis/referencedata:${OL_REFERENCEDATA_VERSION}
     env_file: settings.env
     environment:
-      JAVA_OPTS: '-server -Xmx1024m -Dspring.datasource.hikari.maximum-pool-size=5 -Dlogging.config=/config/log/logback.xml'
+      JAVA_OPTS: '-server -Xmx2048m -Dspring.datasource.hikari.maximum-pool-size=5 -Dlogging.config=/config/log/logback.xml'
     volumes:
       - 'service-config:/config'
     depends_on: [log, db]
@@ -89,7 +89,7 @@ services:
     command: ["/wait-for-postgres.sh", "/run.sh"]
 
   fulfillment-extensions:
-    image: kausamusa/esw-fulfillment-extensions:1.0.0-SNAPSHOT
+    image: kausamusa/esw-fulfillment-extensions:${ESWATINI_FULFILLMENT_EXTENSION_VERSION}
     volumes:
       - 'fulfillment-extensions:/extensions'
 
