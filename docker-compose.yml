@@ -100,7 +100,8 @@ services:
       JAVA_OPTS: '-server -Xmx512m -Dspring.datasource.hikari.maximum-pool-size=5 -Dlogging.config=/config/log/logback.xml'
     volumes:
       - 'service-config:/config'
-    depends_on: [log, db]
+      - 'fulfillment-extensions:/extensions'
+    depends_on: [log, db, fulfillment-extensions]
     command: ["/wait-for-postgres.sh", "/run.sh"]
 
   report:
