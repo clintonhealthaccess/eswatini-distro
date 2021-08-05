@@ -100,9 +100,14 @@ services:
       JAVA_OPTS: '-server -Xmx512m -Dspring.datasource.hikari.maximum-pool-size=5 -Dlogging.config=/config/log/logback.xml'
     volumes:
       - 'service-config:/config'
-      - 'fulfillment-extensions:/extensions'
-    depends_on: [log, db, fulfillment-extensions]
+      - 'stock-management-extensions:/extensions'
+    depends_on: [log, db, stock-management-extensions]
     command: ["/wait-for-postgres.sh", "/run.sh"]
+
+  stock-management-extensions:
+    image: kausamusa/esw-stock-management-extensions:${ESWATINI_STOCK_MANAGEMENT_EXTENSION_VERSION}
+    volumes:
+      - 'stock-management-extensions:/extensions'
 
   report:
     image: openlmis/report:${OL_REPORT_VERSION}
