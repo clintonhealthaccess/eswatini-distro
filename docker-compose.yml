@@ -191,3 +191,5 @@ volumes:
     external: true
   fulfillment-extensions:
     external: false
+  stock-management-extensions:
+    external: false
